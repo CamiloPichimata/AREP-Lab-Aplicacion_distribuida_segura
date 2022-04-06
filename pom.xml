@@ -3,4 +3,35 @@
   <groupId>co.edu.escuelaing.arep</groupId>
   <artifactId>arep-aplicaion_distribuida_segura</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+  	
+  <dependencies>
+ 	<!-- https://mvnrepository.com/artifact/com.sparkjava/spark-core -->
+	<dependency>
+	    <groupId>com.sparkjava</groupId>
+	    <artifactId>spark-core</artifactId>
+	    <version>2.9.3</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+	<dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.35</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>1.7.35</version>
+    </dependency>
+  </dependencies>
+
+  
 </project>
