@@ -26,5 +26,52 @@ Para esto comenzamos creando un par de llaves mediante la herramienta `keytool`,
 keytool -genkeypair -alias loginkeypair -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore loginkeystore.p12 -validity 3650
 ```
 
-Esto nos genera un archivo llamada `loginkeystore.p12` el cuál se almacena en la carpeta **keystores** como se puede ver a continuación:
+Esto nos genera un archivo llamado `loginkeystore.p12` el cuál se almacena en la carpeta **keystores** como se puede ver a continuación:
+
+![](img/keytool.png)
+
+![](img/keytool_key.png)
+
+En este caso se generaron las llaves usando como contraseña los digitos del 1 al 6 (`123456`)
+
+A continuación para poder realizar la conexión segura en la aplicación se agregó la siguiente línea al método `main` donde se inicializa el servidor:
+
+```java
+// Especificación
+void spark.Spark.secure(String keystoreFile, String keystorePassword, String truststoreFile, String truststorePassword)
+
+// Implementación en la inicialización del servidor
+secure(getKeystore(), "123456", null, null);
+```
+
+En este caso, el primer argumento, se hace un llamado al método `getKeyStore`, este tiene como fin retornar un String con la el path para acceder al archivo generado al usar la herramienta **keytool**, su implementación es la siguiente:
+
+```java
+static String getKeystore() {
+	if (System.getenv("KEYSTORE") != null) {
+        return System.getenv("keystore");
+	}
+	return "keystores/loginkeystore.p12";
+}
+```
+
+Después de realizadas estas configuraciones se inicia el servicio usando el siguiente comando:
+
+```bash
+mvn exec:java -Dexec.mainClass="co.edu.escuelaing.AppDistribuidaSegura.SecureSparkWeb"
+```
+
+Después de inicializado el servicio ingresamos a la siguiente dirección con el fin de verificar que la conexión se realiza de forma segura, mediante el uso del protocolo https:
+
+```
+https://localhost:5000/Hello
+```
+
+Al ingresar a dicha dirección desde el navegador se puede ver que la página carga correctamente y muestra el mensaje especificado:
+
+![](img/https_Hello.png)
+
+De acuerdo con esto se puede ver que la página está usando las llaves anteriormente creadas para realizar la conexión, si verificamos el certificado podemos ver los datos ingresados anteriormente:
+
+![](img/localhost_cert.png)
 
