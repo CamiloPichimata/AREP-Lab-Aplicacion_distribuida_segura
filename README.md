@@ -18,6 +18,8 @@ La aplicación web a desarrollar tiene como fin la creación y almacenamiento de
 
 ## Arquitectura de seguridad del prototipo
 
+### Acceso seguro
+
 Para permitir acceso seguro a los usuarios se utilizarán llaves públicas, llaves privadas y certificados con el fin de garantizar la autenticación, autorización e integridad de los usuarios y entre los diferentes servicios desplegados.
 
 Para esto comenzamos creando un par de llaves mediante la herramienta `keytool`, el comando a ejecutar es el siguiente:
@@ -75,3 +77,50 @@ De acuerdo con esto se puede ver que la página está usando las llaves anterior
 
 ![](img/localhost_cert.png)
 
+ Esto muestra que la conexión si se está realizando de la forma esperada.
+
+### Autenticación
+
+Para realizar la autenticación de manera segura, se hace uso del cifrado de contraseñas mediante el uso del algoritmo de `hash-256`, el usuario ingresa sus datos y al momento de que da click en el botón **Login** se obtiene el hash de la contraseña ingresada y este es enviado al servidor que verifica si el usuario realmente se encuentra registrado o no.
+
+En este caso en memoria se encuentran 3 usuarios registrados, cada uno con 2 atributos, _name_ y _password_, el nombre de usuario con el que se registró y el código hash de su contraseña, la implementación realizada es la siguiente
+
+```java
+public static void main(String[] args) {
+	// Inicialización de usuarios registrados
+	UserApp user1 = new UserApp("User1", "de7d0966dd91649474ecd891568e59977165c1d80a745a2e62599ec810b8c551");
+	UserApp user2 = new UserApp("User2", "3a09990e3ab649f1c81c22d21c9a52f6f889632f41db9987e1d9c043626dd7d3");
+	UserApp user3 = new UserApp("User3", "056f0753b4fa50c639811bd7500b2f3f5af973911a9da8e640f98769afa645f7");
+	RegisteredUsers registeredUsers = new RegisteredUsers();
+	registeredUsers.AddNewUser(user1);
+	registeredUsers.AddNewUser(user2);
+	registeredUsers.AddNewUser(user3);
+
+	// Inicialización del servidor
+	// . . .
+}
+```
+
+### Conexión segura entre servidores
+
+Para realizar una conexión segura entre los servidores se exporta el certificado a un un archivo empleando el siguiente comando: 
+
+```bash
+keytool -export -keystore ./loginkeystore.p12 -alias loginkeypair -file logincert.cer
+```
+
+Al ejecutar el comando se pide la contraseña anteriormente dada al certificado y se da enter, la ejecución se puede ver a continuación:
+
+![](img/Exportar_Cert_A_Archivo.png)
+
+Después de eso se importa el certificado, a un TrustStore empleando el siguiente comando
+
+```bash
+keytool -import -file ./logincert.cer -alias firstCA -keystore LoginTrustStore
+```
+
+Al ejecutar el comando se pide ingresar una clave para el TrustStore, la cuál se debe colocar 2 veces, luego se muestra información del certificado a importar, ingresamos `yes` para confirmar la importación o `no` para cancelar. La salida en consola es la siguiente: 
+
+![](img/Importar_Cert_A_LoginTrustStore.png)
+
+Esto hace que el servidor no acepte llamados o peticiones de ningún cliente, excepto los que se encuentran registrados, en su TrustStore, de esta forma se asegura que solo se acepten conexiones permitidas y se de respuesta a peticiones de clientes autorizados.
