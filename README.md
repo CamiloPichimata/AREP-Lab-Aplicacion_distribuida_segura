@@ -83,7 +83,7 @@ De acuerdo con esto se puede ver que la página está usando las llaves anterior
 
 Para realizar la autenticación de manera segura, se hace uso del cifrado de contraseñas mediante el uso del algoritmo de `hash-256`, el usuario ingresa sus datos y al momento de que da click en el botón **Login** se obtiene el hash de la contraseña ingresada y este es enviado al servidor que verifica si el usuario realmente se encuentra registrado o no.
 
-En este caso en memoria se encuentran 3 usuarios registrados, cada uno con 2 atributos, _name_ y _password_, el nombre de usuario con el que se registró y el código hash de su contraseña, la implementación realizada es la siguiente
+En este caso en memoria se encuentran 3 usuarios registrados, cada uno con 2 atributos, ___name___ y ___password___, el nombre de usuario con el que se registró y el código hash de su contraseña, la implementación realizada es la siguiente
 
 ```java
 public static void main(String[] args) {
@@ -123,4 +123,4 @@ Al ejecutar el comando se pide ingresar una clave para el TrustStore, la cuál s
 
 ![](img/Importar_Cert_A_LoginTrustStore.png)
 
-Esto hace que el servidor no acepte llamados o peticiones de ningún cliente, excepto los que se encuentran registrados, en su TrustStore, de esta forma se asegura que solo se acepten conexiones permitidas y se de respuesta a peticiones de clientes autorizados.
+Esto hace que el servidor no acepte llamados o peticiones de ningún cliente, excepto los que se encuentran registrados en su TrustStore, de esta forma se asegura que solo se acepten conexiones permitidas y se de respuesta a peticiones de clientes autorizados.

@@ -1,6 +1,7 @@
 package co.edu.escuelaing.AppDistribuidaSegura;
 
-import static spark.Spark.*; 
+import static spark.Spark.*;
+import static co.edu.escuelaing.AppDistribuidaSegura.SecureURLReader.*;
 
 public class SecureSparkWeb {
  
@@ -34,8 +35,21 @@ public class SecureSparkWeb {
 			String uName = req.queryParams("uName");
 			String uPasswd = req.queryParams("uPasswd");
 			System.out.println("uName: " + uName + " - uPasswd: " + uPasswd);
-			Boolean isRegistered = registeredUsers.IsRegistered(uName, uPasswd);
-			return isRegistered;
+			return registeredUsers.IsRegistered(uName, uPasswd);
+		});
+
+		get("getNotes", (req, res) -> {
+			String responseURL = readURL("localhost:5001/getNotes");
+			System.out.println("SECURE SPARK WEB\n    /getNotes: " + responseURL);
+			return responseURL;
+		});
+
+		put("/putNotes", (req, res) -> {
+			String body = req.body();
+			System.out.println("SECURE SPARK WEB\n    /putNotes: " + body);
+			String responseURL = putURL("localhost:5001/putNotes", body);
+			System.out.println("---- responseURL: " + responseURL);
+			return responseURL;
 		});
 	}
 	

@@ -20,6 +20,7 @@ public class RegisteredUsers {
 		for (UserApp user: users) {
 			if (user.getName().equals(uName) && user.getPassword().equals(uPasswd)) {
 				isRegistered = true;
+				break;
 			}
 		}
 		return isRegistered;

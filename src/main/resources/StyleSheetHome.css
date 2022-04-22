@@ -1,0 +1,20 @@
+body {
+    margin: 30px;
+}
+
+.TextoEditable {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+.Titulo {
+    width: 400px;
+}
+
+button {
+    padding: 6px;
+}
+
+.TextoNota {
+    width: 1000px;
+}

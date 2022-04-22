@@ -3,19 +3,36 @@
     <head>
         <meta charset="utf-8">
         <title>Home</title>
-        <!--link href="StyleSheet.css" rel="stylesheet"-->
+        <link href="StyleSheetHome.css" rel="stylesheet">
     </head>
     <body>
 		<h1>NOTAS</h1>
-		<div class="Columna1">
-			<h2>Lista de notas</h2>
-			<h3>Título nota 1</h3>
-		</div>
-		<div class="Columna 2">
-			<p>Aquí va el contenido de la nota, borre esto y escriba su nota, luego de click en el botón 'Guardar' para guardar la nota</p>
-		</div>
+        <div class="Notas">
+            <h2>Lista de notas</h2>
+            <div class="Nota">
+                <div class="Titulo">
+                    <h3 class="TextoEditable ContenidoTitulo" contenteditable="true">Título nota 1</h3>
+                </div>
+                <div class="TextoNota">
+                    <p class="TextoEditable ContenidoNota" contenteditable="true">Aquí va el contenido de la nota, borre esto y escriba su nota, luego de click en el botón 'Guardar' para guardar la nota.</p>
+                    <button onclick="guardarNota()">Guardar</button>
+                </div>
+            </div>
+            <!--br>
+            <div class="Nota">
+                <div class="Titulo">
+                    <h3 class="TextoEditable" contenteditable="true">Título nota 2</h3>
+                </div>
+                <div class="TextoNota">
+                    <p class="TextoEditable Contenido" contenteditable="true">Texto de la nota.</p>
+                    <button>Guardar</button>
+                </div>
+            </div>
+            <br-->
+
+        </div>
     </body>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="script.js"></script>
+    <script src="scriptHome.js"></script>
 </html>
